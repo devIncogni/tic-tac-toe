@@ -162,3 +162,46 @@ ul {
 }
 
 /* #endregion MAINCONTENT STYLING */
+
+/* #region DIALOG STYLING */
+
+::backdrop {
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(0.25rem);
+}
+
+#playerDetailsMenu {
+    margin: auto;
+}
+
+#playerDetailsMenu p {
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 1rem;
+}
+
+#playerDetailsMenu form {
+    margin: 1rem;
+}
+
+#playerDetailsMenu fieldset {
+    border: none;
+}
+
+#playerDetailsMenu li {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+#playerDetailsMenu button {
+    width: 100%;
+    padding: 0.125rem;
+}
+
+#playerDetailsMenu input {
+    padding: 0.125rem;
+}
+
+
+/* #endregion DIALOG STYLING */

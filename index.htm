@@ -10,11 +10,30 @@
 </head>
 
 <body>
+    <dialog id="playerDetailsMenu">
+        <form method="dialog">
+            <p>Signs (X and O) will be alloted randomly</p>
+            <fieldset>
+                <ul>
+                    <li><label for="player1-name">Player 1: </label>
+                        <input type="text" name="player1-name" id="player1-name" placeholder="Godzilla" >
+                    </li>
+                    <li>
+                        <label for="player2-name">Player 2: </label>
+                        <input type="text" name="player2-name" id="player2-name" placeholder="Kong">
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <button id="subtNames">Submit</button>
+            </fieldset>
+        </form>
+    </dialog>
     <div id="header">
         <div id="navBar">
             <p>TicTacToe</p>
             <ul id="navLinks">
-                <li>New Game</li>
+                <li id="startNew">New Game</li>
                 <li>How to Play</li>
                 <li>About</li>
             </ul>
@@ -23,17 +42,17 @@
     <div id="mainContent">
         <div id="containerBlock">
 
+            <div class="signBox" data-block-index="0"></div>
             <div class="signBox" data-block-index="1"></div>
             <div class="signBox" data-block-index="2"></div> <!-- Row 1 -->
+            
             <div class="signBox" data-block-index="3"></div>
-
             <div class="signBox" data-block-index="4"></div>
             <div class="signBox" data-block-index="5"></div> <!-- Row 2 -->
+            
             <div class="signBox" data-block-index="6"></div>
-
             <div class="signBox" data-block-index="7"></div>
             <div class="signBox" data-block-index="8"></div> <!-- Row 3 -->
-            <div class="signBox" data-block-index="9"></div>
 
         </div>
     </div>

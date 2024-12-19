@@ -1,8 +1,22 @@
 function game(Player1, Player2) {
   // let opponents = [];
 
-  let winner = "";
-  function start() {}
+  let winner = undefined;
+  let gameInProgress = false;
+
+  function isGameOngoing() {
+    return gameInProgress;
+  }
+
+  function start() {
+    gameInProgress = true;
+    // Disable game start btn
+    GameBoard.initialiseGameBoard();
+    // Ask for names of players and their Signs
+  }
+
+  function cont() {}
+
   function end() {}
   function whoWon() {
     return winner;
@@ -10,7 +24,7 @@ function game(Player1, Player2) {
   function setWinner(winner) {
     winner = winner;
   }
-  return { start, end, whoWon, setWinner };
+  return { start, end, cont, whoWon, setWinner, isGameOngoing };
 }
 
 function createPlayer(name, sign) {
@@ -32,11 +46,14 @@ function createPlayer(name, sign) {
   function setIsMyMove(isMyMove) {
     myMove = isMyMove;
   }
-  return { getName, getSign, movesMade, isMyMove, setIsMyMove };
+  function incrementMoves() {
+    playerMoves++;
+  }
+  return { getName, getSign, movesMade, isMyMove, setIsMyMove, incrementMoves };
 }
 
 const GameBoard = (function () {
-  const gameArr = [];
+  let gameArr = [];
   let lastIndex = undefined;
   let LastPlayer = undefined;
 
@@ -146,4 +163,58 @@ const GameBoard = (function () {
     checkWon,
     initialiseGameBoard,
   };
+})();
+
+const Display = (function () {
+  let inputModal = document.querySelector("#playerDetailsMenu");
+  let startGameBtn = document.querySelector("#startNew");
+
+  let player1, player2;
+
+  startGameBtn.addEventListener("click", (event) => {
+    inputModal.showModal();
+  });
+
+  window.addEventListener("load", () => {
+    inputModal.showModal();
+  });
+
+  let subtNameBtn = document.querySelector("#subtNames");
+  subtNameBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    // #region NAME AND SIGN SELECTION
+    let p1Name = document.querySelector("#player1-name").value;
+    p1Name =
+      p1Name == ""
+        ? document.querySelector("#player1-name").placeholder
+        : p1Name;
+
+    let p2Name = document.querySelector("#player2-name").value;
+    p2Name =
+      p2Name == ""
+        ? document.querySelector("#player2-name").placeholder
+        : p2Name;
+
+    let p1Sign = Math.random();
+    p1Sign = p1Sign < 0.5 ? "X" : "O";
+    let p2Sign = p1Sign == "X" ? "O" : "X";
+    // #endregion NAME AND SIGN SELECTION
+
+    player1 = createPlayer(p1Name, p1Sign);
+    player2 = createPlayer(p2Name, p2Sign);
+
+    
+
+    inputModal.close();
+  });
+
+  let signBox = [...document.querySelectorAll(".signBox")];
+  signBox.forEach((box) => {
+    box.addEventListener("click", (event) => {
+      console.log(box.getAttribute("data-block-index"));
+    });
+  });
+
+  return { player1, player2 };
 })();
