@@ -1,5 +1,7 @@
-function game(Player1, Player2) {
+function game() {
   // let opponents = [];
+
+  let player1, player2;
 
   let winner = undefined;
   let gameInProgress = false;
@@ -15,21 +17,89 @@ function game(Player1, Player2) {
     // Ask for names of players and their Signs
   }
 
-  function cont() {}
+  function cont(player, markIndex) {
+    if (!GameBoard.checkBoardFilled()) {
+      if (GameBoard.isValidMoveMark(markIndex)) {
+        GameBoard.markBoard(player, markIndex);
+        player.incrementMoves();
 
-  function end() {}
+        endTurn(player);
+      } else {
+        alert("Invalid Spot");
+      }
+    } else {
+      endTurn(player);
+    }
+  }
+
+  function endTurn(player) {
+    
+    if (player1.isMyMove()) {
+      player1.setIsMyMove(false);
+      player2.setIsMyMove(true);
+    } else {
+      player1.setIsMyMove(false);
+      player2.setIsMyMove(true);
+    }
+  }
+
   function whoWon() {
     return winner;
   }
   function setWinner(winner) {
     winner = winner;
   }
-  return { start, end, cont, whoWon, setWinner, isGameOngoing };
+
+  // Event Listeners
+
+  let subtNameBtn = document.querySelector("#subtNames");
+  subtNameBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    // #region NAME AND SIGN SELECTION
+    let p1Name = document.querySelector("#player1-name").value;
+    p1Name =
+      p1Name == ""
+        ? document.querySelector("#player1-name").placeholder
+        : p1Name;
+
+    let p2Name = document.querySelector("#player2-name").value;
+    p2Name =
+      p2Name == ""
+        ? document.querySelector("#player2-name").placeholder
+        : p2Name;
+
+    let p1Sign = Math.random();
+    p1Sign = p1Sign < 0.5 ? "X" : "O";
+    let p2Sign = p1Sign == "X" ? "O" : "X";
+    // #endregion NAME AND SIGN SELECTION
+
+    player1 = createPlayer(p1Name, p1Sign);
+    player2 = createPlayer(p2Name, p2Sign);
+
+    start();
+    inputModal.close();
+  });
+
+  let signBox = [...document.querySelectorAll(".signBox")];
+  signBox.forEach((box) => {
+    box.addEventListener("click", (event) => {
+      console.log(box.getAttribute("data-block-index"));
+      let markPos = box.getAttribute("data-block-index");
+      if (player1.isMyMove()) {
+        cont(player1, markPos - 1);
+      } else {
+        cont(player2, markPos - 1);
+      }
+    });
+  });
+
+  return { start, endTurn, cont, whoWon, setWinner, isGameOngoing };
 }
 
 function createPlayer(name, sign) {
   let playerMoves = 0;
-  let myMove = false;
+  let myMove = sign == "X" ? true : false;
 
   function movesMade() {
     return playerMoves;
@@ -169,8 +239,6 @@ const Display = (function () {
   let inputModal = document.querySelector("#playerDetailsMenu");
   let startGameBtn = document.querySelector("#startNew");
 
-  let player1, player2;
-
   startGameBtn.addEventListener("click", (event) => {
     inputModal.showModal();
   });
@@ -178,43 +246,4 @@ const Display = (function () {
   window.addEventListener("load", () => {
     inputModal.showModal();
   });
-
-  let subtNameBtn = document.querySelector("#subtNames");
-  subtNameBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-
-    // #region NAME AND SIGN SELECTION
-    let p1Name = document.querySelector("#player1-name").value;
-    p1Name =
-      p1Name == ""
-        ? document.querySelector("#player1-name").placeholder
-        : p1Name;
-
-    let p2Name = document.querySelector("#player2-name").value;
-    p2Name =
-      p2Name == ""
-        ? document.querySelector("#player2-name").placeholder
-        : p2Name;
-
-    let p1Sign = Math.random();
-    p1Sign = p1Sign < 0.5 ? "X" : "O";
-    let p2Sign = p1Sign == "X" ? "O" : "X";
-    // #endregion NAME AND SIGN SELECTION
-
-    player1 = createPlayer(p1Name, p1Sign);
-    player2 = createPlayer(p2Name, p2Sign);
-
-    
-
-    inputModal.close();
-  });
-
-  let signBox = [...document.querySelectorAll(".signBox")];
-  signBox.forEach((box) => {
-    box.addEventListener("click", (event) => {
-      console.log(box.getAttribute("data-block-index"));
-    });
-  });
-
-  return { player1, player2 };
 })();
