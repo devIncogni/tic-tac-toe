@@ -138,3 +138,27 @@ ul {
 }
 
 /* #endregion HEADER/NAVBAR STYLING */
+
+/* #region MAINCONTENT STYLING */
+
+#mainContent {
+    margin: auto;
+    padding: 2rem;
+}
+
+#containerBlock {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2px;
+    background-color: black;
+}
+
+.signBox {
+    /* border: 1px solid black; */
+    height: 10rem;
+    aspect-ratio: 1;
+    background-color: white;
+}
+
+/* #endregion MAINCONTENT STYLING */
