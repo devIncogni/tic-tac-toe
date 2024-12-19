@@ -72,8 +72,69 @@ h6 {
 
 /* #endregion CSS RESET */
 
-/* #region HEADER STYLING */
+/* #region BODY STYLING */
 
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
+#mainContent {
+    flex: 1;
+}
 
-/* #endregion HEADER STYLING */
+ul {
+    list-style: none;
+}
+
+/* #endregion BODY STYLING */
+
+/* #region Scrollbar-styling */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #b8b8b8;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #929292;
+}
+
+/* #endregion Scrollbar-styling */
+
+/* #region HEADER/NAVBAR STYLING */
+
+#navBar {
+    margin: auto;
+    width: 80%;
+
+    display: flex;
+    justify-content: space-between;
+
+    user-select: none;
+}
+
+#navBar>p {
+    font-size: 2rem;
+}
+
+#navLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: clamp(20rem, 20vw, 40%);
+}
+
+/* #endregion HEADER/NAVBAR STYLING */
