@@ -1,17 +1,6 @@
-// Game Object:
-// Functions to implement:
-// New Game
-// End Game
-// Edit Player Names
-//
-// GameBoard Object:
-// Functions to implement:
-// Check if game board is filled
-// Check if someone has won?
-// What was the last move and who played it
-// Player Object//
+function game(Player1, Player2) {
+  // let opponents = [];
 
-function game() {
   let winner = "";
   function start() {}
   function end() {}
@@ -26,6 +15,8 @@ function game() {
 
 function createPlayer(name, sign) {
   let playerMoves = 0;
+  let myMove = false;
+
   function movesMade() {
     return playerMoves;
   }
@@ -35,13 +26,25 @@ function createPlayer(name, sign) {
   function getSign() {
     return sign;
   }
-  return { getName, getSign, movesMade };
+  function isMyMove() {
+    return myMove;
+  }
+  function setIsMyMove(isMyMove) {
+    myMove = isMyMove;
+  }
+  return { getName, getSign, movesMade, isMyMove, setIsMyMove };
 }
 
 const GameBoard = (function () {
-  const gameArr = new Array(9);
+  const gameArr = [];
   let lastIndex = undefined;
   let LastPlayer = undefined;
+
+  function initialiseGameBoard() {
+    gameArr = new Array(9);
+    lastIndex = undefined;
+    LastPlayer = undefined;
+  }
 
   function checkWon(Player) {
     if (Player.movesMade() >= 3) {
@@ -100,6 +103,17 @@ const GameBoard = (function () {
     }
   }
 
+  function checkBoardFilled() {
+    for (let i = 0; i < 9; i++) {
+      if (gameArr[i] == undefined) {
+        return false;
+      } else {
+        continue;
+      }
+    }
+    return true;
+  }
+
   function isValidMoveMark(index) {
     if (gameArr[index] == undefined) {
       return true;
@@ -128,5 +142,8 @@ const GameBoard = (function () {
     markBoard,
     getLastMarkIndex,
     getLastPlayer,
+    checkBoardFilled,
+    checkWon,
+    initialiseGameBoard,
   };
 })();
