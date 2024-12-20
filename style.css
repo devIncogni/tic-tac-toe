@@ -267,3 +267,15 @@ ul {
         padding: 0.5rem;
     }
 }
+
+@media (max-width: 400px) {
+    html {
+        font-size: 70%;
+    }
+
+    #navBar {
+        width: 100%;
+        padding: 0.5rem;
+    }
+}
+
