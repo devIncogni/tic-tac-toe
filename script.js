@@ -1,101 +1,101 @@
-function game() {
-  // let opponents = [];
+// function game() {
+//   // let opponents = [];
 
-  let player1, player2;
+//   let player1, player2;
 
-  let winner = undefined;
-  let gameInProgress = false;
+//   let winner = undefined;
+//   let gameInProgress = false;
 
-  function isGameOngoing() {
-    return gameInProgress;
-  }
+//   function isGameOngoing() {
+//     return gameInProgress;
+//   }
 
-  function start() {
-    gameInProgress = true;
-    // Disable game start btn
-    GameBoard.initialiseGameBoard();
-    // Ask for names of players and their Signs
-  }
+//   function start() {
+//     gameInProgress = true;
+//     // Disable game start btn
+//     GameBoard.initialiseGameBoard();
+//     // Ask for names of players and their Signs
+//   }
 
-  function cont(player, markIndex) {
-    if (!GameBoard.checkBoardFilled()) {
-      if (GameBoard.isValidMoveMark(markIndex)) {
-        GameBoard.markBoard(player, markIndex);
-        player.incrementMoves();
+//   function cont(player, markIndex) {
+//     if (!GameBoard.checkBoardFilled()) {
+//       if (GameBoard.isValidMoveMark(markIndex)) {
+//         GameBoard.markBoard(player, markIndex);
+//         player.incrementMoves();
 
-        endTurn(player);
-      } else {
-        alert("Invalid Spot");
-      }
-    } else {
-      endTurn(player);
-    }
-  }
+//         endTurn(player);
+//       } else {
+//         alert("Invalid Spot");
+//       }
+//     } else {
+//       endTurn(player);
+//     }
+//   }
 
-  function endTurn(player) {
-    
-    if (player1.isMyMove()) {
-      player1.setIsMyMove(false);
-      player2.setIsMyMove(true);
-    } else {
-      player1.setIsMyMove(false);
-      player2.setIsMyMove(true);
-    }
-  }
+//   function endTurn(player) {
 
-  function whoWon() {
-    return winner;
-  }
-  function setWinner(winner) {
-    winner = winner;
-  }
+//     if (player1.isMyMove()) {
+//       player1.setIsMyMove(false);
+//       player2.setIsMyMove(true);
+//     } else {
+//       player1.setIsMyMove(false);
+//       player2.setIsMyMove(true);
+//     }
+//   }
 
-  // Event Listeners
+//   function whoWon() {
+//     return winner;
+//   }
+//   function setWinner(winner) {
+//     winner = winner;
+//   }
 
-  let subtNameBtn = document.querySelector("#subtNames");
-  subtNameBtn.addEventListener("click", (event) => {
-    event.preventDefault();
+//   // Event Listeners
 
-    // #region NAME AND SIGN SELECTION
-    let p1Name = document.querySelector("#player1-name").value;
-    p1Name =
-      p1Name == ""
-        ? document.querySelector("#player1-name").placeholder
-        : p1Name;
+//   let subtNameBtn = document.querySelector("#subtNames");
+//   subtNameBtn.addEventListener("click", (event) => {
+//     event.preventDefault();
 
-    let p2Name = document.querySelector("#player2-name").value;
-    p2Name =
-      p2Name == ""
-        ? document.querySelector("#player2-name").placeholder
-        : p2Name;
+//     // #region NAME AND SIGN SELECTION
+//     let p1Name = document.querySelector("#player1-name").value;
+//     p1Name =
+//       p1Name == ""
+//         ? document.querySelector("#player1-name").placeholder
+//         : p1Name;
 
-    let p1Sign = Math.random();
-    p1Sign = p1Sign < 0.5 ? "X" : "O";
-    let p2Sign = p1Sign == "X" ? "O" : "X";
-    // #endregion NAME AND SIGN SELECTION
+//     let p2Name = document.querySelector("#player2-name").value;
+//     p2Name =
+//       p2Name == ""
+//         ? document.querySelector("#player2-name").placeholder
+//         : p2Name;
 
-    player1 = createPlayer(p1Name, p1Sign);
-    player2 = createPlayer(p2Name, p2Sign);
+//     let p1Sign = Math.random();
+//     p1Sign = p1Sign < 0.5 ? "X" : "O";
+//     let p2Sign = p1Sign == "X" ? "O" : "X";
+//     // #endregion NAME AND SIGN SELECTION
 
-    start();
-    inputModal.close();
-  });
+//     player1 = createPlayer(p1Name, p1Sign);
+//     player2 = createPlayer(p2Name, p2Sign);
 
-  let signBox = [...document.querySelectorAll(".signBox")];
-  signBox.forEach((box) => {
-    box.addEventListener("click", (event) => {
-      console.log(box.getAttribute("data-block-index"));
-      let markPos = box.getAttribute("data-block-index");
-      if (player1.isMyMove()) {
-        cont(player1, markPos - 1);
-      } else {
-        cont(player2, markPos - 1);
-      }
-    });
-  });
+//     start();
+//     inputModal.close();
+//   });
 
-  return { start, endTurn, cont, whoWon, setWinner, isGameOngoing };
-}
+//   let signBox = [...document.querySelectorAll(".signBox")];
+//   signBox.forEach((box) => {
+//     box.addEventListener("click", (event) => {
+//       console.log(box.getAttribute("data-block-index"));
+//       let markPos = box.getAttribute("data-block-index");
+//       if (player1.isMyMove()) {
+//         cont(player1, markPos - 1);
+//       } else {
+//         cont(player2, markPos - 1);
+//       }
+//     });
+//   });
+
+//   return { start, endTurn, cont, whoWon, setWinner, isGameOngoing };
+// }
 
 function createPlayer(name, sign) {
   let playerMoves = 0;
@@ -133,7 +133,7 @@ const GameBoard = (function () {
     LastPlayer = undefined;
   }
 
-  function checkWon(Player) {
+  function hasWon(Player) {
     if (Player.movesMade() >= 3) {
       console.log(Player.movesMade());
       const sign = Player.getSign();
@@ -186,11 +186,11 @@ const GameBoard = (function () {
       }
       return false;
     } else {
-      return;
+      return false;
     }
   }
 
-  function checkBoardFilled() {
+  function boardFilled() {
     for (let i = 0; i < 9; i++) {
       if (gameArr[i] == undefined) {
         return false;
@@ -223,19 +223,23 @@ const GameBoard = (function () {
     return LastPlayer;
   }
 
+  function getGameArray() {
+    return gameArr;
+  }
+
   return {
-    checkWon,
+    getGameArray,
+    hasWon,
     isValidMoveMark,
     markBoard,
     getLastMarkIndex,
     getLastPlayer,
-    checkBoardFilled,
-    checkWon,
     initialiseGameBoard,
+    boardFilled,
   };
 })();
 
-const Display = (function () {
+const DisplayController = (function () {
   let inputModal = document.querySelector("#playerDetailsMenu");
   let startGameBtn = document.querySelector("#startNew");
 
@@ -246,4 +250,93 @@ const Display = (function () {
   window.addEventListener("load", () => {
     inputModal.showModal();
   });
+
+  function renderGameBoard(gameArray) {
+    let signBox = [...document.querySelectorAll(".signBox")];
+    for (let i = 0; i < gameArray.length; i++) {
+      if (!!gameArray[i]) {
+        signBox[i].textContent = gameArray[i];
+      } else {
+        continue;
+      }
+    }
+  }
+
+  return { renderGameBoard };
+})();
+
+const GameController = (function () {
+
+  function getPlayers() {
+    let player = {
+      p1: { name: "", sign: "" },
+      p2: { name: "", sign: "" },
+    };
+
+    player.p1.name = document.querySelector("#player1-name").value;
+    player.p1.name =
+      player.p1.name == ""
+        ? document.querySelector("#player1-name").placeholder
+        : player.p1.name;
+
+    player.p2.name = document.querySelector("#player2-name").value;
+    player.p2.name =
+      player.p2.name == ""
+        ? document.querySelector("#player2-name").placeholder
+        : player.p2.name;
+
+    player.p1.sign = Math.random();
+    player.p1.sign = player.p1.sign < 0.5 ? "X" : "O";
+    player.p2.sign = player.p1.sign == "X" ? "O" : "X";
+
+    return player;
+  }
+
+  GameBoard.initialiseGameBoard();
+  let players = getPlayers();
+  let p1 = createPlayer(players.p1.name, players.p1.sign);
+  let p2 = createPlayer(players.p2.name, players.p2.sign);
+
+  function makeTurn(Player, index) {
+    if (GameBoard.isValidMoveMark(index)) {
+      GameBoard.markBoard(Player, index);
+      Player.incrementMoves();
+    } else {
+      alert("Invalid Move");
+    }
+  }
+
+  function switchTurn() {
+    if (p1.isMyMove()) {
+      p1.setIsMyMove(false);
+      p2.setIsMyMove(true);
+    } else {
+      p1.setIsMyMove(true);
+      p2.setIsMyMove(false);
+    }
+  }
+
+  function gameEnded() {
+    if (
+      GameBoard.boardFilled() ||
+      GameBoard.hasWon(p1) ||
+      GameBoard.hasWon(p2)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function gameResult() {
+    if (GameBoard.hasWon(p1)) {
+      return p1;
+    } else if (GameBoard.hasWon(p2)) {
+      return p2;
+    } else {
+      return { name: "No-One" };
+    }
+  }
+
+  
 })();
