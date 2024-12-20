@@ -262,4 +262,8 @@ ul {
     #navBar {
         width: 95%;
     }
+
+    #mainContent {
+        padding: 0.5rem;
+    }
 }
