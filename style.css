@@ -254,6 +254,8 @@ ul {
 
 /* #endregion DIALOG STYLING */
 
+/* #region MEDIA QUERIES */
+
 @media (max-width: 768px) {
     html {
         font-size: 80%;
@@ -279,3 +281,4 @@ ul {
     }
 }
 
+/* #endregion MEDIA QUERIES */
