@@ -163,6 +163,7 @@ ul {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
 }
 
 #containerBlock {
@@ -194,7 +195,7 @@ ul {
 
     display: flex;
     max-width: 30rem;
-
+    max-height: 10rem;
 }
 
 #statusBlock>div {
