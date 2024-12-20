@@ -6,6 +6,15 @@
     font-display: swap;
 }
 
+html{
+    font-size: 100%;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 80%;
+    }
+}
 
 /* #region CSS RESET by JOSH W COMEAU*/
 /* 1. Use a more-intuitive box-sizing model */
@@ -142,6 +151,7 @@ ul {
 }
 
 #navLinks {
+    max-width: 50%;
     display: flex;
     justify-content: space-between;
     align-items: center;
