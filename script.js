@@ -272,10 +272,10 @@ const DisplayController = (function () {
     p1Stats[2].textContent = player1.getSign();
     p2Stats[2].textContent = player2.getSign();
 
-    if (player1.isMyMove()) {
+    if (player1.isMyMove() && !gameEnded) {
       p1Stats[0].parentElement.style.backgroundColor = "green";
       p2Stats[0].parentElement.style.backgroundColor = "white";
-    } else if (player2.isMyMove()) {
+    } else if (player2.isMyMove() && !gameEnded) {
       p1Stats[0].parentElement.style.backgroundColor = "white";
       p2Stats[0].parentElement.style.backgroundColor = "green";
     } else {
@@ -283,15 +283,16 @@ const DisplayController = (function () {
       p2Stats[0].parentElement.style.backgroundColor = "white";
     }
 
-    let gameStats = [...document.querySelectorAll("game-status > p")];
+    let gameStats = [...document.querySelectorAll("#game-status > p")];
     if (!gameEnded) {
       gameStats[1].textContent = "Game In Progress";
     } else {
       gameStats[1].textContent = `${winner.getName()} Wins!`;
+      gameStats[0].parentElement.style.backgroundColor = "yellow";
     }
   }
 
-  return { renderGameBoard };
+  return { renderGameBoard, renderStatusBlock };
 })();
 
 const GameController = (function () {
@@ -363,11 +364,31 @@ const GameController = (function () {
     }
   }
 
+  function currentPlayer() {
+    return p1.isMyMove() ? p1 : p2;
+  }
+
   let submitNamesBtn = document.querySelector("#subtNames");
   submitNamesBtn.addEventListener("click", (event) => {
     players = getPlayers();
     p1 = createPlayer(players.p1.name, players.p1.sign);
     p2 = createPlayer(players.p2.name, players.p2.sign);
     GameBoard.initialiseGameBoard();
+    DisplayController.renderStatusBlock(p1, p2, gameResult(), gameEnded());
+  });
+
+  let signBoxes = [...document.querySelectorAll(".signBox")];
+  signBoxes.forEach((signBox) => {
+    let blockIndex = signBox.getAttribute("data-block-index");
+    signBox.addEventListener("click", (event) => {
+      if (!gameEnded()) {
+        makeTurn(currentPlayer(), blockIndex);
+        switchTurn();
+        DisplayController.renderGameBoard(GameBoard.getGameArray());
+        DisplayController.renderStatusBlock(p1, p2, gameResult(), gameEnded());
+      } else {
+        DisplayController.renderStatusBlock(p1, p2, gameResult(), gameEnded());
+      }
+    });
   });
 })();
