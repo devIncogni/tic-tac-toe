@@ -69,22 +69,23 @@ const GameBoard = (function () {
           return hasWon;
         }
       }
-      // Check Diagonals
+
+      let d1Win = true;
+      let d2Win = true;
       for (let i = 0; i < 3; i++) {
-        let d1Won = true;
-        if (gameArr[2 * i + 2] != sign && d1Won) {
-          d1Won = false;
+        if (gameArr[4 * i] != sign && d1Win) {
+          d1Win = false;
         }
 
-        let d2Won = true;
-        if (gameArr[4 * i] != sign && d2Won) {
-          d2Won = false;
+        if (gameArr[2 * i + 2] != sign && d2Win) {
+          d2Win = false;
         }
 
-        if (i == 2 && (d1Won || d2Won)) {
+        if (i == 2 && (d1Win || d2Win)) {
           return true;
         }
       }
+
       return false;
     } else {
       return false;
@@ -163,7 +164,8 @@ const GameBoard = (function () {
 
   return {
     getGameArray,
-    hasWon: hasWonBruteForce,
+    // hasWon: hasWonBruteForce,
+    hasWon,
     isValidMoveMark,
     markBoard,
     getLastMarkIndex,
