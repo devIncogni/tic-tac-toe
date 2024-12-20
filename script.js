@@ -1,102 +1,3 @@
-// function game() {
-//   // let opponents = [];
-
-//   let player1, player2;
-
-//   let winner = undefined;
-//   let gameInProgress = false;
-
-//   function isGameOngoing() {
-//     return gameInProgress;
-//   }
-
-//   function start() {
-//     gameInProgress = true;
-//     // Disable game start btn
-//     GameBoard.initialiseGameBoard();
-//     // Ask for names of players and their Signs
-//   }
-
-//   function cont(player, markIndex) {
-//     if (!GameBoard.checkBoardFilled()) {
-//       if (GameBoard.isValidMoveMark(markIndex)) {
-//         GameBoard.markBoard(player, markIndex);
-//         player.incrementMoves();
-
-//         endTurn(player);
-//       } else {
-//         alert("Invalid Spot");
-//       }
-//     } else {
-//       endTurn(player);
-//     }
-//   }
-
-//   function endTurn(player) {
-
-//     if (player1.isMyMove()) {
-//       player1.setIsMyMove(false);
-//       player2.setIsMyMove(true);
-//     } else {
-//       player1.setIsMyMove(false);
-//       player2.setIsMyMove(true);
-//     }
-//   }
-
-//   function whoWon() {
-//     return winner;
-//   }
-//   function setWinner(winner) {
-//     winner = winner;
-//   }
-
-//   // Event Listeners
-
-//   let subtNameBtn = document.querySelector("#subtNames");
-//   subtNameBtn.addEventListener("click", (event) => {
-//     event.preventDefault();
-
-//     // #region NAME AND SIGN SELECTION
-//     let p1Name = document.querySelector("#player1-name").value;
-//     p1Name =
-//       p1Name == ""
-//         ? document.querySelector("#player1-name").placeholder
-//         : p1Name;
-
-//     let p2Name = document.querySelector("#player2-name").value;
-//     p2Name =
-//       p2Name == ""
-//         ? document.querySelector("#player2-name").placeholder
-//         : p2Name;
-
-//     let p1Sign = Math.random();
-//     p1Sign = p1Sign < 0.5 ? "X" : "O";
-//     let p2Sign = p1Sign == "X" ? "O" : "X";
-//     // #endregion NAME AND SIGN SELECTION
-
-//     player1 = createPlayer(p1Name, p1Sign);
-//     player2 = createPlayer(p2Name, p2Sign);
-
-//     start();
-//     inputModal.close();
-//   });
-
-//   let signBox = [...document.querySelectorAll(".signBox")];
-//   signBox.forEach((box) => {
-//     box.addEventListener("click", (event) => {
-//       console.log(box.getAttribute("data-block-index"));
-//       let markPos = box.getAttribute("data-block-index");
-//       if (player1.isMyMove()) {
-//         cont(player1, markPos - 1);
-//       } else {
-//         cont(player2, markPos - 1);
-//       }
-//     });
-//   });
-
-//   return { start, endTurn, cont, whoWon, setWinner, isGameOngoing };
-// }
-
 function createPlayer(name, sign) {
   let playerMoves = 0;
   let myMove = sign == "X" ? true : false;
@@ -190,6 +91,39 @@ const GameBoard = (function () {
     }
   }
 
+  function hasWonBruteForce(Player) {
+    const sign = Player.getSign();
+
+    // Row Condition
+    if (
+      (sign == gameArr[0] && sign == gameArr[1] && sign == gameArr[2]) ||
+      (sign == gameArr[3] && sign == gameArr[4] && sign == gameArr[5]) ||
+      (sign == gameArr[6] && sign == gameArr[7] && sign == gameArr[8])
+    ) {
+      return true;
+    }
+    // Col Condition
+    // 0 1 2
+    // 3 4 5
+    // 6 7 8
+    else if (
+      (sign == gameArr[0] && sign == gameArr[3] && sign == gameArr[6]) ||
+      (sign == gameArr[1] && sign == gameArr[4] && sign == gameArr[7]) ||
+      (sign == gameArr[2] && sign == gameArr[5] && sign == gameArr[8])
+    ) {
+      return true;
+    }
+    // Diagonal Condition
+    else if (
+      (sign == gameArr[0] && sign == gameArr[4] && sign == gameArr[8]) ||
+      (sign == gameArr[2] && sign == gameArr[4] && sign == gameArr[6])
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   function boardFilled() {
     for (let i = 0; i < 9; i++) {
       if (gameArr[i] == undefined) {
@@ -229,7 +163,7 @@ const GameBoard = (function () {
 
   return {
     getGameArray,
-    hasWon,
+    hasWon: hasWonBruteForce,
     isValidMoveMark,
     markBoard,
     getLastMarkIndex,
@@ -254,11 +188,7 @@ const DisplayController = (function () {
   function renderGameBoard(gameArray) {
     let signBox = [...document.querySelectorAll(".signBox")];
     for (let i = 0; i < gameArray.length; i++) {
-      if (!!gameArray[i]) {
-        signBox[i].textContent = gameArray[i];
-      } else {
-        continue;
-      }
+      signBox[i].textContent = !gameArray[i] ? "" : gameArray[i];
     }
   }
 
@@ -286,6 +216,7 @@ const DisplayController = (function () {
     let gameStats = [...document.querySelectorAll("#game-status > p")];
     if (!gameEnded) {
       gameStats[1].textContent = "Game In Progress";
+      gameStats[0].parentElement.style.backgroundColor = "white";
     } else {
       gameStats[1].textContent = `${winner.getName()} Wins!`;
       gameStats[0].parentElement.style.backgroundColor = "yellow";
@@ -374,6 +305,7 @@ const GameController = (function () {
     p1 = createPlayer(players.p1.name, players.p1.sign);
     p2 = createPlayer(players.p2.name, players.p2.sign);
     GameBoard.initialiseGameBoard();
+    DisplayController.renderGameBoard(GameBoard.getGameArray());
     DisplayController.renderStatusBlock(p1, p2, gameResult(), gameEnded());
   });
 
