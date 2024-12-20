@@ -227,6 +227,12 @@ ul {
     font-size: 1.5rem;
     text-align: center;
     margin: 1rem;
+    margin-bottom: 0;
+}
+
+#playerDetailsMenu p:nth-child(2) {
+    font-size: 1rem;
+    margin: 0 0 1rem 0;
 }
 
 #playerDetailsMenu form {
@@ -245,13 +251,32 @@ ul {
 
 #playerDetailsMenu button {
     width: 100%;
-    padding: 0.125rem;
+    padding: 0.25rem;
+    margin-top: 1rem;
+
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    transition: background-color 100ms linear;
 }
+
+#playerDetailsMenu button:hover {
+    background-color: #1c1c1c;
+    color: #ffffff;
+    border: 1px solid #000000;
+}
+
+#playerDetailsMenu button:active {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #000000;
+}
+
 
 #playerDetailsMenu input {
     padding: 0.125rem;
 }
-
 
 /* #endregion DIALOG STYLING */
 
