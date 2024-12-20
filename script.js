@@ -262,6 +262,35 @@ const DisplayController = (function () {
     }
   }
 
+  function renderStatusBlock(player1, player2, winner, gameEnded) {
+    let p1Stats = [...document.querySelectorAll("#player1-status > p")];
+    let p2Stats = [...document.querySelectorAll("#player2-status > p")];
+
+    p1Stats[1].textContent = player1.getName();
+    p2Stats[1].textContent = player2.getName();
+
+    p1Stats[2].textContent = player1.getSign();
+    p2Stats[2].textContent = player2.getSign();
+
+    if (player1.isMyMove()) {
+      p1Stats[0].parentElement.style.backgroundColor = "green";
+      p2Stats[0].parentElement.style.backgroundColor = "white";
+    } else if (player2.isMyMove()) {
+      p1Stats[0].parentElement.style.backgroundColor = "white";
+      p2Stats[0].parentElement.style.backgroundColor = "green";
+    } else {
+      p1Stats[0].parentElement.style.backgroundColor = "white";
+      p2Stats[0].parentElement.style.backgroundColor = "white";
+    }
+
+    let gameStats = [...document.querySelectorAll("game-status > p")];
+    if (!gameEnded) {
+      gameStats[1].textContent = "Game In Progress";
+    } else {
+      gameStats[1].textContent = `${winner.getName()} Wins!`;
+    }
+  }
+
   return { renderGameBoard };
 })();
 
@@ -330,7 +359,7 @@ const GameController = (function () {
     } else if (GameBoard.hasWon(p2)) {
       return p2;
     } else {
-      return { name: "No-One" };
+      return createPlayer("No-One", "");
     }
   }
 
@@ -341,5 +370,4 @@ const GameController = (function () {
     p2 = createPlayer(players.p2.name, players.p2.sign);
     GameBoard.initialiseGameBoard();
   });
-  
 })();
