@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+@font-face {
+    font-family: Noto-Sans;
+    src: url(./assets/Noto_Sans/NotoSans-VariableFont_wdth\,wght.ttf);
+}
+
+
 /* #region CSS RESET by JOSH W COMEAU*/
 /* 1. Use a more-intuitive box-sizing model */
 *,
@@ -78,6 +86,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    
+    font-family: 'Noto-Sans', 'Noto Sans', sans-serif;
 }
 
 #mainContent {
@@ -162,6 +172,13 @@ ul {
     height: 10rem;
     aspect-ratio: 1;
     background-color: white;
+
+    font-size: 7rem;
+    font-weight: 100;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #statusBlock {
