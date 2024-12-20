@@ -36,7 +36,6 @@ const GameBoard = (function () {
 
   function hasWon(Player) {
     if (Player.movesMade() >= 3) {
-      console.log(Player.movesMade());
       const sign = Player.getSign();
 
       // Check Rows
@@ -256,12 +255,14 @@ const GameController = (function () {
 
   let players, p1, p2;
 
-  function makeTurn(Player, index) {
+  function makeTurnSuccessful(Player, index) {
     if (GameBoard.isValidMoveMark(index)) {
       GameBoard.markBoard(Player, index);
       Player.incrementMoves();
+      return true;
     } else {
       alert("Invalid Move");
+      return false;
     }
   }
 
@@ -315,12 +316,12 @@ const GameController = (function () {
   signBoxes.forEach((signBox) => {
     let blockIndex = signBox.getAttribute("data-block-index");
     signBox.addEventListener("click", (event) => {
-      if (!gameEnded()) {
-        makeTurn(currentPlayer(), blockIndex);
+      if (!gameEnded() && makeTurnSuccessful(currentPlayer(), blockIndex)) {
         switchTurn();
         DisplayController.renderGameBoard(GameBoard.getGameArray());
         DisplayController.renderStatusBlock(p1, p2, gameResult(), gameEnded());
       } else {
+        DisplayController.renderGameBoard(GameBoard.getGameArray());
         DisplayController.renderStatusBlock(p1, p2, gameResult(), gameEnded());
       }
     });
