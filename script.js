@@ -266,7 +266,6 @@ const DisplayController = (function () {
 })();
 
 const GameController = (function () {
-
   function getPlayers() {
     let player = {
       p1: { name: "", sign: "" },
@@ -292,10 +291,7 @@ const GameController = (function () {
     return player;
   }
 
-  GameBoard.initialiseGameBoard();
-  let players = getPlayers();
-  let p1 = createPlayer(players.p1.name, players.p1.sign);
-  let p2 = createPlayer(players.p2.name, players.p2.sign);
+  let players, p1, p2;
 
   function makeTurn(Player, index) {
     if (GameBoard.isValidMoveMark(index)) {
@@ -338,5 +334,12 @@ const GameController = (function () {
     }
   }
 
+  let submitNamesBtn = document.querySelector("#subtNames");
+  submitNamesBtn.addEventListener("click", (event) => {
+    players = getPlayers();
+    p1 = createPlayer(players.p1.name, players.p1.sign);
+    p2 = createPlayer(players.p2.name, players.p2.sign);
+    GameBoard.initialiseGameBoard();
+  });
   
 })();

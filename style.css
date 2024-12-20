@@ -144,6 +144,8 @@ ul {
 #mainContent {
     margin: auto;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
 }
 
 #containerBlock {
@@ -159,6 +161,29 @@ ul {
     height: 10rem;
     aspect-ratio: 1;
     background-color: white;
+}
+
+#statusBlock {
+    margin-top: 1rem;
+    border: 1px solid black;
+    width: 100%;
+    flex: 1;
+
+    display: flex;
+    max-width: 30rem;
+
+}
+
+#statusBlock>div {
+    border: 1px solid black;
+    flex: 1;
+    padding: 0.25rem;
+    max-width: 10rem;
+}
+
+#statusBlock p {
+    white-space: nowrap;
+    overflow-x: scroll;
 }
 
 /* #endregion MAINCONTENT STYLING */
