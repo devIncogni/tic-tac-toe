@@ -6,14 +6,8 @@
     font-display: swap;
 }
 
-html{
+html {
     font-size: 100%;
-}
-
-@media (max-width: 768px) {
-    html {
-        font-size: 80%;
-    }
 }
 
 /* #region CSS RESET by JOSH W COMEAU*/
@@ -96,7 +90,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    
+
     font-family: 'Noto-Sans', 'Noto Sans', sans-serif;
 }
 
@@ -259,3 +253,13 @@ ul {
 
 
 /* #endregion DIALOG STYLING */
+
+@media (max-width: 768px) {
+    html {
+        font-size: 80%;
+    }
+
+    #navBar {
+        width: 95%;
+    }
+}
